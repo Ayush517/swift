@@ -54,6 +54,7 @@ Tutorial | Last Updated |
 [Custom Differentiation](https://colab.research.google.com/github/tensorflow/swift/blob/master/docs/site/tutorials/custom_differentiation.ipynb) | March 2019
 [Model Training Walkthrough](https://colab.research.google.com/github/tensorflow/swift/blob/master/docs/site/tutorials/model_training_walkthrough.ipynb) | March 2019
 [Raw TensorFlow Operators](https://colab.research.google.com/github/tensorflow/swift/blob/master/docs/site/tutorials/raw_tensorflow_operators.ipynb) | December 2019
+[Introducing X10, an XLA-Based Backend](https://colab.research.google.com/github/tensorflow/swift/blob/master/docs/site/tutorials/introducing_x10.ipynb) | May 2020
 
 ### Resources
 
@@ -62,6 +63,7 @@ Tutorial | Last Updated |
 - [Release Notes](RELEASES.md)
 - [Known Issues](KNOWN_ISSUES.md)
 - [Frequently Asked Questions](FAQ.md)
+- [TensorFlow Blog Posts](https://blog.tensorflow.org/search?label=Swift)
 
 ### Forums
 
@@ -98,9 +100,10 @@ struct Model: Differentiable {
     }
 }
 
-// Differentiate using `Differentiable.gradient(at:in:)`.
-let model = Model(w: 4.0, b: 3.0)
-let (𝛁model, 𝛁input) = model.gradient(at: 2.0) { model, input in
+// Differentiate using `gradient(at:_:in:)`.
+let model = Model(w: 4, b: 3)
+let input: Float = 2
+let (𝛁model, 𝛁input) = gradient(at: model, input) { model, input in
     model.applied(to: input)
 }
 
@@ -141,6 +144,7 @@ Document | Last Updated | Status |
 -------- | ------------ | ------ |
 [Why *Swift* for TensorFlow?](docs/WhySwiftForTensorFlow.md) | April 2018 | Current
 [Swift for TensorFlow Design Overview](docs/DesignOverview.md) | April 2018 | Outdated
+[Supported Backends](docs/SupportedBackends.md) | May 2020 | Current
 
 ### Technology deep dive
 
@@ -150,9 +154,9 @@ out the following documentation.
 
 Document | Last Updated | Status |
 -------- | ------------ | ------ |
-[Differentiable Programming Mega-Proposal](https://github.com/apple/swift/blob/master/docs/DifferentiableProgramming.md) | September 2019 | Current
-[Swift Differentiable Programming Design Overview](https://docs.google.com/document/d/1bPepWLfRQa6CtXqKA8CDQ87uZHixNav-TFjLSisuKag/edit?usp=sharing) | June 2019 | Current
+[Swift Differentiable Programming Manifesto](https://github.com/apple/swift/blob/master/docs/DifferentiableProgramming.md) | January 2020 | Current
 [Swift Differentiable Programming Implementation Overview](https://docs.google.com/document/d/1_BirmTqdotglwNTOcYAW-ib6mx_jl-gH9Dbg4WmHZh0) | August 2019 | Current
+[Swift Differentiable Programming Design Overview](https://docs.google.com/document/d/1bPepWLfRQa6CtXqKA8CDQ87uZHixNav-TFjLSisuKag/edit?usp=sharing) | June 2019 | Outdated
 [Differentiable Types](docs/DifferentiableTypes.md) | March 2019 | Outdated
 [Differentiable Functions and Differentiation APIs](docs/DifferentiableFunctions.md) | March 2019 | Outdated
 [Dynamic Property Iteration using Key Paths](docs/DynamicPropertyIteration.md) | March 2019 | Current
@@ -183,6 +187,20 @@ Additional code repositories that make up the core of the project include:
 
 [Jupyter Notebook](http://jupyter.org/) support for Swift is under development at
 [google/swift-jupyter](https://github.com/google/swift-jupyter).
+
+### Model garden
+
+[tensorflow/swift-models](https://github.com/tensorflow/swift-models) is a
+repository of machine learning models built with Swift for TensorFlow. It
+intended to provide examples of how to use Swift for TensorFlow, to allow for
+end-to-end tests of machine learning APIs, and to host model benchmarking
+infrastructure.
+
+### SwiftAI
+
+[fastai/swiftai](https://github.com/fastai/swiftai) is a high-level API for
+Swift for TensorFlow, modeled after the
+[fastai Python library](https://github.com/fastai/fastai).
 
 ## Community
 
